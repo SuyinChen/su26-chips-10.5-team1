@@ -35,7 +35,7 @@ class Representative < ApplicationRecord
     geocodio.geocode(query, ['cd'])
   end
 
-  # NOTE: This info only grabs data for the most likely represenative district
+  # NOTE: This info only grabs data for the most likely representative district
   # given a search. It would be good to adapt this to show all possible
   # matching representatives for a search / county.
   # See https://www.geocod.io/docs/#data-appends-fields
