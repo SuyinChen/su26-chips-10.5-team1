@@ -48,4 +48,30 @@ RSpec.describe Representative do
       expect(described_class.count).to eq(1)
     end
   end
+
+  describe '.civic_api_to_representative_params' do
+    before do
+      stub_request(:post, /api\.geocod\.io/).to_return(
+        status: 200,
+        body: Rails.root.join('spec/fixtures/geocodio_response.json').read,
+        headers: { 'Content-Type' => 'application/json' }
+      )
+      @rep = described_class.civic_api_to_representative_params(
+        described_class.geocodio_search('123 Main St')
+      ).first
+    end
+
+    it 'stores the party from the bio block' do
+      expect(@rep.party).to eq('Democrat')
+    end
+
+    it 'stores contact details' do
+      expect(@rep.phone).to eq('202-225-0000')
+      expect(@rep.website).to eq('https://doe.house.gov')
+    end
+
+    it 'stores the bioguide id from the references block' do
+      expect(@rep.bioguide_id).to eq('D000000')
+    end
+  end
 end

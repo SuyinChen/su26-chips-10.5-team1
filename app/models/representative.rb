@@ -51,7 +51,7 @@ class Representative < ApplicationRecord
       # Inspect all the data that's there to make part 1 easier.
       # Rails.logger.debug official
       # official.dig('bio', 'party')
-      ocdid = official['govtrack_id']
+      ocdid = official.dig('references', 'govtrack_id')
       reps << Representative.find_rep(official, ocdid: ocdid, title: title)
     end
     reps
@@ -59,19 +59,39 @@ class Representative < ApplicationRecord
 
   def self.find_rep(official, title: '', ocdid: '')
     rep = Representative.find_by(ocdid: ocdid)
-    if rep.nil?
-      rep = Representative.create({ name: official['name'], ocdid: ocdid,
-      title: title, party: official['party'], photo_url: official['photo_url'] })
-    end
+    rep ||= Representative.create(
+      name: official['name'],
+      ocdid: ocdid,
+      title: title,
+      party: official.dig('bio', 'party'),
+      birthday: official.dig('bio', 'birthday'),
+      gender: official.dig('bio', 'gender'),
+      address: official.dig('contact', 'address'),
+      phone: official.dig('contact', 'phone'),
+      contact_form: official.dig('contact', 'contact_form'),
+      website: official.dig('contact', 'url'),
+      twitter: official.dig('social', 'twitter'),
+      facebook: official.dig('social', 'facebook'),
+      youtube: official.dig('social', 'youtube'),
+      bioguide_id: official.dig('references', 'bioguide_id')
+    )
     rep
   end
 
   def update_from_geocodio(official)
     self.title = official['type']
-    self.ocdid = official['govtrack_id']
-    self.party = official['party']
-    self.photo_url = official['photo_url']
-    # TODO: store the address, phone and website
+    self.ocdid = official.dig('references', 'govtrack_id')
+    self.party = official.dig('bio', 'party')
+    self.birthday = official.dig('bio', 'birthday')
+    self.gender = official.dig('bio', 'gender')
+    self.address = official.dig('contact', 'address')
+    self.phone = official.dig('contact', 'phone')
+    self.contact_form = official.dig('contact', 'contact_form')
+    self.website = official.dig('contact', 'url')
+    self.twitter = official.dig('social', 'twitter')
+    self.facebook = official.dig('social', 'facebook')
+    self.youtube = official.dig('social', 'youtube')
+    self.bioguide_id = official.dig('references', 'bioguide_id')
     save!
     self
   end
