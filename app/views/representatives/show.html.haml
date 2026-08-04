@@ -1,4 +1,16 @@
 .container-fluid.bg-light
   .row.text-center
     .col-12
-      %h1.text-center= @representative&.name
+      %h1.text-center= @representative.name
+      %p.lead= @representative.title
+      %p
+        %strong Party:
+        = @representative.party
+      - if @representative.birthday.present?
+        %p
+          %strong Born:
+          = @representative.birthday.strftime('%B %-d, %Y')
+      - if @representative.gender.present?
+        %p
+          %strong Gender:
+          = @representative.gender
