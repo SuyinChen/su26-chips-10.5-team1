@@ -3,14 +3,48 @@
     .col-12
       %h1.text-center= @representative.name
       %p.lead= @representative.title
-      %p
-        %strong Party:
-        = @representative.party
+
+      - if @representative.party.present?
+        %p
+          %strong Party:
+          = @representative.party
+
       - if @representative.birthday.present?
         %p
           %strong Born:
           = @representative.birthday.strftime('%B %-d, %Y')
+
       - if @representative.gender.present?
         %p
           %strong Gender:
           = @representative.gender
+
+      - if @representative.address.present?
+        %p
+          %strong Address:
+          = @representative.address
+
+      - if @representative.phone.present?
+        %p
+          %strong Phone:
+          = @representative.phone
+
+      - if @representative.website.present?
+        %p
+          = link_to 'Official Website', @representative.website
+
+      - if @representative.contact_form.present?
+        %p
+          = link_to 'Contact Form', @representative.contact_form
+
+      - if @representative.twitter.present?
+        %p
+          = link_to 'Twitter', "https://twitter.com/#{@representative.twitter}"
+
+      - if @representative.facebook.present?
+        %p
+          = link_to 'Facebook', "https://www.facebook.com/#{@representative.facebook}"
+
+      - if @representative.youtube.present?
+        %p
+          = link_to 'YouTube', "https://www.youtube.com/#{@representative.youtube}"
