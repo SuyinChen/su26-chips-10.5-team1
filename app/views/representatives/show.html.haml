@@ -4,6 +4,15 @@
       %h1.text-center= @representative.name
       %p.lead= @representative.title
 
+      - if @representative.portrait_url.present?
+        %img.img-fluid.rounded.mb-3{
+          src: @representative.portrait_url,
+          alt: "Portrait of #{@representative.name}",
+          width: 250
+        }
+      - else
+        %p.text-muted Photo unavailable
+
       - if @representative.party.present?
         %p
           %strong Party:

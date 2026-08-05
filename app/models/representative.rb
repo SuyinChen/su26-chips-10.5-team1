@@ -25,11 +25,18 @@
 class Representative < ApplicationRecord
   has_many :news_items, dependent: :delete_all
 
+  def portrait_url
+    return if bioguide_id.blank?
+
+    guide_id = bioguide_id.strip.upcase
+    "https://bioguide.congress.gov/bioguide/photo/#{guide_id.first}/#{guide_id}.jpg"
+  end
+
   # Review the Geocodio docs
   # https://www.geocod.io/docs/#congressional-districts
   def self.geocodio_search(query)
     geocodio_api_key = ENV.fetch('GEOCODIO_API_KEY', Rails.application.credentials[:GEOCODIO_API_KEY])
-    raise ArgumentError 'Missing GEOCODIO_API_KEY' if geocodio_api_key.blank?
+    raise ArgumentError, 'Missing GEOCODIO_API_KEY' if geocodio_api_key.blank?
 
     geocodio = Geocodio::Gem.new(geocodio_api_key)
     geocodio.geocode(query, ['cd'])
