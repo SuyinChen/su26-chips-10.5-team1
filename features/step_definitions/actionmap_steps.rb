@@ -33,16 +33,15 @@ end
 Then /I click the county "(.*)"/i do |county_name|
   # Same as above, you might find this helpful.
   page.execute_script(<<~JS)
-      const county = document.querySelector(
-        "path[data-county-name='#{county_name}']"
-      );
+    const county = document.querySelector(
+      "path[data-county-name='#{county_name}']"
+    );
 
-      county.dispatchEvent(new MouseEvent("click", {
-        bubbles: true,
-        cancelable: true
-      }));
-    JS
-
+    county.dispatchEvent(new MouseEvent("click", {
+      bubbles: true,
+      cancelable: true
+    }));
+  JS
 end
 
 Then /I click the county with FIPS Code "(.*)"/i do |fips_code|
@@ -52,12 +51,12 @@ end
 Then /I should see (\d+) (?:states|counties)/i do |count|
   # How many counties should the map render
   # You might use this as a check that the right number of elements are rendered.
-  expect(page).to have_css("path.actionmap-view-region", count: count.to_i)
+  expect(page).to have_css('path.actionmap-view-region', count: count.to_i)
 end
 
 Then /I should see representatives for "(.*)"/i do |county|
-  expect(page).to have_content("Table of Representatives")
-  #expect(page).to have_content("Adam Schiff")
+  expect(page).to have_content('Table of Representatives')
+  # expect(page).to have_content("Adam Schiff")
   expect(page).to have_content("Search Results \"#{county}, CA\"")
-  expect(page).to have_css("table")
+  expect(page).to have_table
 end
