@@ -46,6 +46,9 @@ RSpec.describe Representative do
       described_class.find_rep(@official, ocdid: '412345', title: 'representative')
 
       expect(described_class.count).to eq(1)
+      expect do
+        described_class.find_rep(@official, ocdid: '412345', title: 'representative')
+      end.not_to change(described_class, :count)
     end
   end
 

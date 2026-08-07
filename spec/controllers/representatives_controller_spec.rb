@@ -7,6 +7,7 @@ RSpec.describe RepresentativesController do
     it 'assigns the requested representative' do
       rep = Representative.create!(name: 'Max Yfantopoulos', party: 'Democrat')
       get :show, params: { id: rep.id }
+      expect(response).to be_successful
       expect(assigns(:representative)).to eq(rep)
     end
   end
