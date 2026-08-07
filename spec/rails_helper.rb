@@ -13,6 +13,7 @@ SimpleCov::Formatter::LcovFormatter.config do |c|
 end
 
 SimpleCov.start 'rails' do
+  add_filter 'lib'
   command_name 'rspec'
 
   ## CS169: You may want to modify some of the testing configuration.
@@ -37,6 +38,20 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'webmock/rspec'
+require 'capybara/rspec'
+require 'selenium-webdriver'
+
+Capybara.register_driver :headless_chrome do |app|
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless=new')
+  options.add_argument('--no-sandbox')
+  options.add_argument('--disable-dev-shm-usage')
+
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+end
+
+Capybara.javascript_driver = :headless_chrome
+
 WebMock.disable_net_connect!(allow_localhost: true)
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
