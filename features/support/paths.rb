@@ -22,6 +22,12 @@ module NavigationHelpers
       "/state/#{$1}"
 
     # Add more mappings here.
+
+    when /^the search page$/
+      search_representatives_path
+
+
+
     # Here is an example that pulls values out of the Regexp:
     #
     #   when /^(.*)'s profile page$/i

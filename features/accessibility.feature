@@ -31,12 +31,27 @@ Scenario: The Representatives Page
 
 ## CS169: Add the first page here.
 # Be sure to tag the Scenario with @a11y
-# @a11y
-# Scenario: ...
+##@a11y
+##Scenario: The Search Page
+## Given I am on the search page
+## Then the page should be axe clean
+
+@a11y
+Scenario: A Representative's News Page
+  Given the following representatives exist:
+    | name         | title   |
+    | Wilson Jiang | Senator |
+  When I visit the news list for "Wilson Jiang"
+  Then the page should be axe clean
 
 ## CS169: Add the second page here.
-# @a11y
-# Scenario: ...
+@a11y
+Scenario: A Representative Profile Page
+  Given the following representatives exist:
+  | name         | title   |
+  | Wilson Jiang | Senator |
+  When I visit the profile page for "Wilson Jiang"
+  Then the page should be axe clean
 
 ## CS169: Add the third page here.
 # @a11y
