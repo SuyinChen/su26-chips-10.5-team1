@@ -2,7 +2,6 @@
 
 ## You should edit this readme!
 
-> By the end of iteration 1, you should edit this file (and remove this message) to make sure you've updated the badge and links to Heroku, etc.
 
 <!-- TODO: Update these for your repo! -->
 
@@ -14,9 +13,9 @@
 
 <!-- Fill in at least the following info, but add more as is useful. -->
 
-Team Name / Number:
-Heroku Deployment:
-Team Members:
+Team Name / Number: 1
+Render Deployment: https://actionmap-1.onrender.com
+Team Members: Monica, Weizhen, Max, Johanna
 
 ---
 
