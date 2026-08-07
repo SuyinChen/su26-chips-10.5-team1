@@ -13,8 +13,8 @@
 
 <!-- Fill in at least the following info, but add more as is useful. -->
 
-Team Name / Number: 1
-Render Deployment: https://actionmap-1.onrender.com
+Team Name / Number: 1 <br>
+Render Deployment: https://actionmap-1.onrender.com <br>
 Team Members: Monica, Weizhen, Max, Johanna
 
 ---
