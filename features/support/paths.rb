@@ -26,6 +26,12 @@ module NavigationHelpers
     when /^the search page$/
       search_representatives_path
 
+    when /^the create news article page for "([^"]+)"$/
+      representative = Representative.find_by!(name: $1)
+      representative_new_my_news_item_path(representative)
+      #representative_new_my_news_item_path(@representative)
+      #"/representatives/#{representative.id}/my_news_item/new"
+
 
 
     # Here is an example that pulls values out of the Regexp:

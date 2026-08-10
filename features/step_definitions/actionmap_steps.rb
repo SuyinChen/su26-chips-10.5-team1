@@ -7,7 +7,22 @@
 Given /^I am logged in via (github|google|developer) as (".*")/i do |provider, _data|
   # This is just a start. You may want to setup Omniauth differently.
   # Look up Omniauth.test_mode
-  page.find_link(text: "#{provider.capitalize} Login")
+  # page.find_link(text: "#{provider.capitalize} Login")
+  OmniAuth.config.test_mode = true
+
+  OmniAuth.config.mock_auth[provider.to_sym] = OmniAuth::AuthHash.new(
+    provider: provider,
+    uid: 'test-user',
+    info: {
+      first_name: name,
+    last_name: 'Test',
+    email: 'test@example.com'
+    }
+  )
+
+  visit "/auth/#{provider}/callback"
+
+  # expect(page).not_to have_link("#{provider.capitalize} Login")
 end
 
 # Suggest Steps that Interact with the Map.
