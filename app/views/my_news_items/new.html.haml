@@ -2,13 +2,26 @@
   .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
     %h1.text-center New news article
 
-  .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
-    = render 'form', news_item:            @news_item,
-                     form_url:             representative_new_my_news_item_path(@representative),
-                     form_method:          :post,
-                     representatives_list: @representatives_list,
-                     disabled_for_user:    false
-  .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
+    = form_tag search_my_news_item_path, method: :get do
+      .form-group
+        = label_tag :representative_id, 'Representative'
+        = select_tag :representative_id,
+                     options_for_select(@representatives_list, @representative.id),
+                     include_blank: true,
+                     class: 'form-control',
+                     required: true
+
+      .form-group
+        = label_tag :issue, 'Issue'
+        = select_tag :issue,
+                     options_for_select(NewsItem.issues),
+                     include_blank: true,
+                     class: 'form-control',
+                     required: true
+
+      .actions
+        = submit_tag 'Search', class: 'btn btn-primary'
+
     .clearfix.mt-3
       .float-right
         = link_to representative_news_items_path(@representative), class: 'btn btn-info' do

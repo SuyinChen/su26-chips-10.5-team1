@@ -1,0 +1,32 @@
+.row
+  .col-12.col-md-8.offset-md-2
+    %h1.text-center News search results
+
+    %p
+      %strong Representative:
+      = @representative.name
+
+    %p
+      %strong Issue:
+      = @issue
+
+    - if @articles.empty?
+      .alert.alert-warning
+        No articles found.
+    - else
+      - @articles.each_with_index do |article, index|
+        .card.mb-3
+          .card-body
+            .form-check
+              = radio_button_tag :article, article['url'], false,
+                                 id: "article_#{index}",
+                                 class: 'form-check-input'
+
+              = label_tag "article_#{index}", article['title'],
+                          class: 'form-check-label'
+
+            %p.mt-2= article['description']
+
+            = link_to article['url'], article['url'],
+                      target: '_blank',
+                      rel: 'noopener'
