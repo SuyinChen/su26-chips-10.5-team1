@@ -11,6 +11,13 @@ class MyNewsItemsController < ApplicationController
     @news_item = NewsItem.new
   end
 
+  def search
+    @issue = params[:issue]
+    currents_api_key = ENV.fetch('CURRENTS_API_KEY', Rails.application.credentials[:CURRENTS_API_KEY])
+    client = Currents::Client.new(currents_api_key)
+    @articles = client.search(@issue).first(5)
+  end
+
   def edit; end
 
   def create
