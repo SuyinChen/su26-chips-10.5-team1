@@ -24,4 +24,27 @@ describe MyNewsItemsController do
       expect(response).to be_successful
     end
   end
+
+  describe 'POST create' do
+  it 'creates news item with an issue' do
+    expect {
+      post :create, params: {
+        representative_id: representative.id,
+        news_item: {
+          title: 'Test Article',
+          link: 'https://example.com',
+          description: 'description test',
+          representative_id: representative.id,
+          issue: 'Climate Change'
+        }
+      }
+    }.to change(NewsItem, :count).by(1)
+
+    expect(NewsItem.last.issue).to eq('Climate Change')
+  end
+end
+
+
+
+
 end
