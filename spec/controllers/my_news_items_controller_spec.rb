@@ -27,12 +27,44 @@ describe MyNewsItemsController do
   end
 
   describe 'POST create' do
+    let(:article_params) do
+      {
+        representative_id: representative.id,
+        issue: 'Climate Change',
+        article: 'https://example.com/climate',
+        articles: {
+          '0' => {
+            title: 'Climate Article',
+            url: 'https://example.com/climate',
+            description: 'Climate change news'
+          }
+        }
+      }
+    end
+
     it 'creates news item with an issue' do
       expect do
-        post :create, params: { representative_id: representative.id, news_item: { title: 'Test Article', link: 'https://example.com', description: 'description test', representative_id: representative.id, issue: 'Climate Change' } }
+        post :create, params: article_params
       end.to change(NewsItem, :count).by(1)
 
       expect(NewsItem.last.issue).to eq('Climate Change')
+    end
+
+    it 'saves the article' do
+      post :create, params: article_params
+
+      expect(NewsItem.last.title).to eq('Climate Article')
+      expect(NewsItem.last.link).to eq('https://example.com/climate')
+      expect(NewsItem.last.description).to eq('Climate change news')
+      expect(NewsItem.last.representative_id).to eq(representative.id)
+    end
+
+    it 'redirects when no article is selected and an alert is shown' do
+      post :create, params: article_params.except(:article)
+
+      expect(flash[:alert]).to be_present
+      expect(response).to redirect_to(search_my_news_item_path(representative_id: representative.id,
+                                                               issue: 'Climate Change'))
     end
   end
 

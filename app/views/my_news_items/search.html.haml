@@ -14,19 +14,29 @@
       .alert.alert-warning
         No articles found.
     - else
-      - @articles.each_with_index do |article, index|
-        .card.mb-3
-          .card-body
-            .form-check
-              = radio_button_tag :article, article['url'], false,
-                                 id: "article_#{index}",
-                                 class: 'form-check-input'
+      = form_tag representative_new_my_news_item_path(@representative),
+                 method: :post do
+        - @articles.each_with_index do |article, index|
+          .card.mb-3
+            .card-body
+              .form-check
+                = radio_button_tag :article, article['url'], false,
+                                   id: "article_#{index}",
+                                   class: 'form-check-input'
 
-              = label_tag "article_#{index}", article['title'],
-                          class: 'form-check-label'
+                = label_tag "article_#{index}", article['title'],
+                            class: 'form-check-label'
 
-            %p.mt-2= article['description']
+              %p.mt-2= article['description']
 
-            = link_to article['url'], article['url'],
-                      target: '_blank',
-                      rel: 'noopener'
+              = link_to article['url'], article['url'],
+                        target: '_blank',
+                        rel: 'noopener'
+
+              = hidden_field_tag "articles[#{index}][title]", article['title']
+              = hidden_field_tag "articles[#{index}][url]", article['url']
+              = hidden_field_tag "articles[#{index}][description]", article['description']
+        = hidden_field_tag :issue, @issue
+
+        .actions
+          = submit_tag 'Save', class: 'btn btn-primary'

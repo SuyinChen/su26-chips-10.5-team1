@@ -21,7 +21,19 @@ class MyNewsItemsController < ApplicationController
   def edit; end
 
   def create
-    @news_item = NewsItem.new(news_item_params)
+    if params[:article].blank?
+      redirect_to search_my_news_item_path(representative_id: @representative.id,
+                                           issue: params[:issue]),
+                  alert: 'For saving, please select an article.'
+      return
+    end
+    selected = params[:articles].values.find do |article|
+      article[:url] == params[:article]
+    end
+    @news_item = NewsItem.new(title: selected[:title], link: selected[:url],
+                              description: selected[:description],
+                              issue: params[:issue],
+                              representative_id: @representative.id)
     if @news_item.save
       redirect_to representative_news_item_path(@representative, @news_item),
                   notice: 'News item was successfully created.'
