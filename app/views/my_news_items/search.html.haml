@@ -1,10 +1,10 @@
 .row
   .col-12.col-md-8.offset-md-2
-    %h1.text-center News search results
+    %h1.text-center Edit News Item
 
     %p
       %strong Representative:
-      = @representative.name
+      = link_to @representative.name, representative_path(@representative)
 
     %p
       %strong Issue:
@@ -14,6 +14,7 @@
       .alert.alert-warning
         No articles found.
     - else
+      %h5.mt-4 Select an article:
       = form_tag representative_new_my_news_item_path(@representative),
                  method: :post do
         - @articles.each_with_index do |article, index|
@@ -24,14 +25,22 @@
                                    id: "article_#{index}",
                                    class: 'form-check-input'
 
-                = label_tag "article_#{index}", article['title'],
+                = label_tag "article_#{index}", 'Select this article',
                             class: 'form-check-label'
 
-              %p.mt-2= article['description']
+              %p.mt-2
+                %strong Title:
+                = article['title']
 
-              = link_to article['url'], article['url'],
-                        target: '_blank',
-                        rel: 'noopener'
+              %p
+                %strong Link:
+                = link_to article['url'], article['url'],
+                          target: '_blank',
+                          rel: 'noopener'
+
+              %p
+                %strong Description:
+                = article['description']
 
               = hidden_field_tag "articles[#{index}][title]", article['title']
               = hidden_field_tag "articles[#{index}][url]", article['url']
@@ -40,3 +49,6 @@
 
         .actions
           = submit_tag 'Save', class: 'btn btn-primary'
+          = link_to 'View News Articles',
+                    representative_news_items_path(@representative),
+                    class: 'btn btn-secondary ms-2'
