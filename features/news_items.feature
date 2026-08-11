@@ -9,7 +9,7 @@ Feature: Search for a news article by issue
     When I select "Wilson Jiang" from "Representative"
     And I select "Climate Change" from "Issue"
     And I press "Search"
-    Then I should see "News search results"
+    Then I should see "Edit News Item"
     And I should see "Wilson Jiang"
     And I should see "Climate Change"
     And I should see "Climate Article One"
