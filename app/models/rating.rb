@@ -28,4 +28,13 @@ class Rating < ApplicationRecord
 
   validates :value, inclusion: { in: 1..5 }
   validates :user_id, uniqueness: { scope: :news_item_id }
+
+  after_destroy :update_news_item_average
+  after_save :update_news_item_average
+
+  private
+
+  def update_news_item_average
+    news_item.update!(average_rating: news_item.ratings.average(:value))
+  end
 end
