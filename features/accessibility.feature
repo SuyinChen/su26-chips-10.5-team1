@@ -65,4 +65,7 @@ Scenario: A Create New Articles Page
 
 ## CS169: Add the fourth page here.
 @a11y
-Scenario: ...
+Scenario: A State Page
+  Given I am on the state page for "WA"
+  When I visit the state map for "WA"
+  Then the page should be axe clean
