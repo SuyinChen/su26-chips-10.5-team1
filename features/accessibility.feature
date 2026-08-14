@@ -54,9 +54,18 @@ Scenario: A Representative Profile Page
   Then the page should be axe clean
 
 ## CS169: Add the third page here.
-# @a11y
-# Scenario: ...
+@a11y
+Scenario: A Create New Articles Page
+  Given the following representatives exist:
+      | name         | title   |
+      | Wilson Jiang | Senator |
+  When I visit the create news article page for "Wilson Jiang"
+  Then the page should be axe clean
+
 
 ## CS169: Add the fourth page here.
-# @a11y
-# Scenario: ...
+@a11y
+Scenario: A State Page
+  Given I am on the state page for "WA"
+  When I visit the state map for "WA"
+  Then the page should be axe clean
