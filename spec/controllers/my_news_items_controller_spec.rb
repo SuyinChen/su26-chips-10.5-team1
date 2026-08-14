@@ -75,6 +75,16 @@ describe MyNewsItemsController do
       expect(rating.user).to eq(user)
       expect(rating.news_item).to eq(NewsItem.last)
     end
+
+    it 'does not create a rating if rating invalid' do
+      invalid_params = article_params.merge(rating: '100')
+
+      expect do
+        post :create, params: invalid_params
+      end.to change(NewsItem, :count).by(1)
+
+      expect(Rating.count).to eq(0)
+    end
   end
 
   describe 'GET search' do
