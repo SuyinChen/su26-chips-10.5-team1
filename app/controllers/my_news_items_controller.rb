@@ -80,7 +80,7 @@ class MyNewsItemsController < ApplicationController
 
   def create_rating(news_item)
     return if params[:rating].blank?
-    
+
     rating = current_user.ratings.find_or_initialize_by(news_item: news_item)
     rating.value = params[:rating]
     rating.save
