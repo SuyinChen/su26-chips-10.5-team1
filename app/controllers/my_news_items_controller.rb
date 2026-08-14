@@ -35,6 +35,7 @@ class MyNewsItemsController < ApplicationController
                               issue: params[:issue],
                               representative_id: @representative.id)
     if @news_item.save
+      create_rating(@news_item)
       redirect_to representative_news_item_path(@representative, @news_item),
                   notice: 'News item was successfully created.'
     else
@@ -75,5 +76,13 @@ class MyNewsItemsController < ApplicationController
 
   def news_item_params
     params.require(:news_item).permit(:title, :issue, :description, :link, :representative_id)
+  end
+
+  def create_rating(news_item)
+    return if params[:rating].blank?
+
+    rating = current_user.ratings.find_or_initialize_by(news_item: news_item)
+    rating.value = params[:rating]
+    rating.save
   end
 end
