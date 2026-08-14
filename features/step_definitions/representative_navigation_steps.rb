@@ -42,3 +42,8 @@ When('I visit the news item {string} for {string}') do |title, representative_na
 
   visit representative_news_item_path(representative, news_item)
 end
+
+When('I visit the create news article page for {string}') do |name|
+  representative = Representative.find_by!(name: name)
+  visit representative_new_my_news_item_path(representative)
+end
