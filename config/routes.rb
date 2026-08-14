@@ -43,5 +43,8 @@ Rails.application.routes.draw do
                                                                  via: %i[put patch]
   delete '/representatives/:representative_id/my_news_item/:id', to: 'my_news_items#destroy'
 
+  # Routes for Ratings
+  post '/news_items/:news_item_id/ratings' => 'ratings#create', :as => :news_item_ratings
+
   get '/search/(:address)' => 'search#search', :as => 'search_representatives'
 end
