@@ -25,6 +25,21 @@
           %dt.col-sm-3.text-md-right Last Updated:
           %dt.col-sm-9
             %time.timeago{ datetime: @news_item.updated_at.iso8601 }
+        %dl.row
+          %dt.col-sm-3.text-md-right Average rating:
+          %dt.col-sm-9
+            - if @news_item.average_rating
+              = number_with_precision(@news_item.average_rating, precision: 1)
+            - else
+              Not yet rated
+        - if current_user
+          = form_tag news_item_ratings_path(@news_item) do
+            .row.mt-3
+              .col-sm-6
+                = label_tag :value, 'Rating'
+                = select_tag :value, options_for_select(1..5), class: 'form-select'
+              .col-sm-6.align-self-end
+                = submit_tag 'Rate', class: 'btn btn-primary'
   .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
     .clearfix
       .float-right
