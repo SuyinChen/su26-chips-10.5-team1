@@ -47,6 +47,12 @@
               = hidden_field_tag "articles[#{index}][description]", article['description']
         = hidden_field_tag :issue, @issue
 
+        .mb-3
+          = label_tag :rating, 'Rating', class: 'form-label'
+          = select_tag :rating,
+                       options_for_select(1..5),
+                       include_blank: true,
+                       class: 'form-select'
         .actions
           = submit_tag 'Save', class: 'btn btn-primary'
           = link_to 'View News Articles',

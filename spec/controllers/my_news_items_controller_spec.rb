@@ -66,6 +66,15 @@ describe MyNewsItemsController do
       expect(response).to redirect_to(search_my_news_item_path(representative_id: representative.id,
                                                                issue: 'Climate Change'))
     end
+
+    it 'creates a rating for selected article' do
+      post :create, params: article_params.merge(rating: '5')
+
+      rating = Rating.last
+      expect(rating.value).to eq(5)
+      expect(rating.user).to eq(user)
+      expect(rating.news_item).to eq(NewsItem.last)
+    end
   end
 
   describe 'GET search' do
